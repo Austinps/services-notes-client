@@ -1,34 +1,37 @@
-import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Public from "./components/Public";
-import Login from "./features/auth/Login";
-import DashLayout from "./components/DashLayout";
-import Welcome from "./features/auth/Welcome";
-import NotesList from "./features/notes/NotesList";
-import UsersList from "./features/users/UsersList";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import { Layout, Public, DashboardLayout } from "./components";
+import { Login, Welcome } from "./features/auth";
+import { NotesList } from "./features/notes";
+import { UsersList } from "./features/users";
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path='/' element={<Layout />}>
         <Route index element={<Public />} />
-        <Route path="login" element={<Login />} />
+        <Route path='login' element={<Login />} />
 
-        <Route path="dash" element={<DashLayout />}>
+        <Route path='dash' element={<DashboardLayout />}>
           <Route index element={<Welcome />} />
 
-          <Route path="notes">
+          <Route path='notes'>
             <Route index element={<NotesList />} />
           </Route>
 
-          <Route path="users">
+          <Route path='users'>
             <Route index element={<UsersList />} />
           </Route>
         </Route>
-        {/* End Dash */}
       </Route>
-    </Routes>
-  );
-}
+    </Route>
+  )
+);
 
-export default App;
+export default function App() {
+  return <RouterProvider router={router} />;
+}
